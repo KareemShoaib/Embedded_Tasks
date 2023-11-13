@@ -1,0 +1,49 @@
+##IAR Ninja build file
+
+
+#Rules
+rule COMPILER_XCL
+  command = "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\common\bin\XclFileGenerator.exe" $xclcommand -f "$rspfile_name"
+  description = IAR_NEW_TOOL+++COMPILER_XCL+++$out
+  rspfile = $rspfile_name
+  rspfile_content = $flags
+
+rule INDEXER
+  command = "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\common\bin\SourceIndexer.exe" $flags
+  depfile = $out.dep
+  deps = gcc
+  description = IAR_NEW_TOOL+++INDEXER+++$out
+
+rule MAKEBROWSE
+  command = "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\common\bin\makeBrowseData.exe" $flags
+  description = IAR_NEW_TOOL+++MAKEBROWSE+++$out
+
+rule PDBLINK
+  command = "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\common\bin\PbdLink.exe" $flags
+  description = IAR_NEW_TOOL+++PDBLINK+++$out
+
+
+
+#Build steps
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.xcl : COMPILER_XCL 
+    flags = "C$:\Users\kokor\Desktop\New$ folder\DIO.c" -o "C$:\Users\kokor\Desktop\New$ folder\Debug\Obj\source_5634686896477721948.dir" --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling --debug --endian=little --cpu=Cortex-M4 -e --fpu=VFPv4_sp --dlib_config "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\arm\inc\c\DLib_Config_Normal.h" -Ol --predef_macros "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.tmp"
+    rspfile_name = C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.xcl.rsp
+    xclcommand = -source_file "C$:\Users\kokor\Desktop\New$ folder\DIO.c" -xcl_file "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.xcl" -macro_file "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.tmp" -icc_path "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\arm\bin\iccarm.exe"
+
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.xcl : COMPILER_XCL 
+    flags = "C$:\Users\kokor\Desktop\New$ folder\main.c" -o "C$:\Users\kokor\Desktop\New$ folder\Debug\Obj\source_5634686896477721948.dir" --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa --no_clustering --no_scheduling --debug --endian=little --cpu=Cortex-M4 -e --fpu=VFPv4_sp --dlib_config "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\arm\inc\c\DLib_Config_Normal.h" -Ol --predef_macros "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.tmp"
+    rspfile_name = C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.xcl.rsp
+    xclcommand = -source_file "C$:\Users\kokor\Desktop\New$ folder\main.c" -xcl_file "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.xcl" -macro_file "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.tmp" -icc_path "C$:\Program$ Files\IAR$ Systems\Embedded$ Workbench$ 9.2\arm\bin\iccarm.exe"
+
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.pbi : INDEXER C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.xcl | C$:\Users\kokor\Desktop\New$ folder\DIO.c
+    flags = "-out=C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.pbi" -f "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.xcl"
+
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.pbi : INDEXER C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.xcl | C$:\Users\kokor\Desktop\New$ folder\main.c
+    flags = "-out=C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.pbi" -f "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.xcl"
+
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbw : MAKEBROWSE C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbd
+    flags = "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbd" -output "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbw"
+
+build C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbd : PDBLINK C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.pbi | C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.pbi
+    flags = -M "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\NewProject.pbd" "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\DIO.pbi" "C$:\Users\kokor\Desktop\New$ folder\Debug\BrowseInfo\source_5634686896477721948.dir\main.pbi"
+
